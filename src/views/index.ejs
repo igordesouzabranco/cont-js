@@ -1,0 +1,45 @@
+<%- include('includes/head') -%>
+<%- include('includes/navbar') -%>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 my-5">
+                <h1 class="text-center">Bem-vindo à AgendaJS</h1>
+                
+                <%- include('includes/messages') -%>
+                
+                
+                <% if (contatos.length > 0) { %>
+                <p class="text-center lead">A melhor solução para gerenciar sua agenda digital.</p>
+                <div class="responsive-table">
+                    <table class="table">
+                        <tr class="table-header bg-dark text-white">
+                            <td>Nome:</td>
+                            <td>Apelido:</td>
+                            <td>Telefone:</td>
+                            <td>Email:</td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <% contatos.forEach(contato => { %>
+                            <tr>
+                                <td><%= contato.nome %></td>
+                                <td><%= contato.nickname %></td>
+                                <td><%= contato.phone %></td>
+                                <td><%= contato.email %></td>
+                                <td><a href="/contato/index/<%= contato._id %>">Editar</a></td>
+                                <td><a href="/contato/delete/<%= contato._id %>" class="text-danger">Excluir</a></td>
+                            </tr>
+                        <% }); %>
+                        <% } else { %>
+                            <h1 class="text-center text-danger">Nenhum contato cadastrado ainda.</h1>
+                        <% } %>
+                        
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+<%- include('includes/footer') -%>

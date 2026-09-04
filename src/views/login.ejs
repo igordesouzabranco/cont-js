@@ -1,0 +1,52 @@
+<%- include('includes/head') -%>
+    <%- include('includes/navbar') -%>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 my-5">
+                    <h1 class="text-center">Login AgendaJS
+                    </h1>
+                    <p class="text-center lead">Crie ou entre em sua conta.</p>
+
+                    <%- include('includes/messages') -%>
+
+                    <div class="row">
+                        <div class="col-lg">
+                            <h4>Faça seu cadastro</h4>
+                            <p>Crie uma conta para acessar nosso serviço.</p>
+                            <form action="/login/register" method="POST" class="js-register-form" novalidate>
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Digite seu email</label>
+                                    <input type="email" class="form-control" name="email" autocomplete="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Digite sua senha</label>
+                                    <input type="password" class="form-control" name="password" autocomplete="new-password" minlength="6" maxlength="20" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            </form>
+                        </div>
+                        <div class="col-lg">
+                            <h4>Formulário de Login</h4>
+                            <p>Entre em sua conta para acessar nosso serviço.</p>
+                            <form action="/login/login" method="POST" class="js-login-form" novalidate>
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Digite seu email</label>
+                                    <input type="email" class="form-control" name="email" autocomplete="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Digite sua senha</label>
+                                    <input type="password" class="form-control" name="password" autocomplete="current-password" minlength="6" maxlength="20" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Entrar</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+        <%- include('includes/footer') -%>
