@@ -9,6 +9,8 @@ AgendaJS é uma aplicação web em Node.js para gerenciar uma agenda de contatos
 - Proteção CSRF nos formulários
 - Mensagens flash (sucesso/erro)
 - CRUD de contatos (criar, editar, listar e excluir)
+- Isolamento de contatos por usuário (multi-tenant)
+- Importação e exportação de contatos (JSON e TXT)
 - Bundle de assets do frontend via Webpack
 
 ## Stack técnica
@@ -68,12 +70,25 @@ Abra:
 
 - http://localhost:3000
 
+## Migração (contatos pré-existentes)
+
+O schema de contatos agora exige um `userId` vinculado a um usuário. Contatos criados antes dessa mudança ficarão órfãos e não aparecerão para nenhum usuário.
+
+Para atribuir esses contatos ao primeiro usuário do banco:
+
+```bash
+npm run migrate:orphaned
+```
+
+Para remover contatos órfãos em vez de migrá-los, use o script `clear-db.js` ou delete manualmente via MongoDB Atlas.
+
 ## Scripts do package.json
 
 - `npm run start`: inicia o servidor (modo “produção”, usando `node server.js`)
 - `npm run start:dev`: inicia o servidor com nodemon (modo desenvolvimento)
 - `npm run dev`: Webpack em modo watch (rebuild automático do bundle)
 - `npm run build`: build do Webpack em modo produção
+- `npm run migrate:orphaned`: migra contatos órfãos (sem `userId`) para o primeiro usuário do banco
 
 ## Deploy (Render + MongoDB Atlas)
 
@@ -109,6 +124,7 @@ Observações:
 - `src/middleware/`: middlewares globais (login, csrf, flash)
 - `frontend/`: código frontend empacotado via Webpack
 - `public/`: arquivos estáticos servidos pelo Express (inclui o bundle gerado)
+- `migrate-orphaned-contacts.js`: script de migração para contatos órfãos
 
 ## Autor
 

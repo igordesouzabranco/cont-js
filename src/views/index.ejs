@@ -1,45 +1,72 @@
 <%- include('includes/head') -%>
 <%- include('includes/navbar') -%>
     <div class="container">
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8 my-5">
-                <h1 class="text-center">Bem-vindo à AgendaJS</h1>
-                
-                <%- include('includes/messages') -%>
-                
-                
-                <% if (contatos.length > 0) { %>
-                <p class="text-center lead">A melhor solução para gerenciar sua agenda digital.</p>
-                <div class="responsive-table">
-                    <table class="table">
-                        <tr class="table-header bg-dark text-white">
-                            <td>Nome:</td>
-                            <td>Apelido:</td>
-                            <td>Telefone:</td>
-                            <td>Email:</td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        <% contatos.forEach(contato => { %>
-                            <tr>
-                                <td><%= contato.nome %></td>
-                                <td><%= contato.nickname %></td>
-                                <td><%= contato.phone %></td>
-                                <td><%= contato.email %></td>
-                                <td><a href="/contato/index/<%= contato._id %>">Editar</a></td>
-                                <td><a href="/contato/delete/<%= contato._id %>" class="text-danger">Excluir</a></td>
-                            </tr>
-                        <% }); %>
-                        <% } else { %>
-                            <h1 class="text-center text-danger">Nenhum contato cadastrado ainda.</h1>
-                        <% } %>
-                        
-                    </table>
-                </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="my-5">
+                    <h1 class="text-center mb-2">ContJS</h1>
+                    <p class="text-center lead mb-4">Gerencie seus contatos de forma inteligente.</p>
+                    
+                    <%- include('includes/messages') -%>
 
+                    <% if (user) { %>
+                        <div class="d-flex gap-2 mb-3" style="justify-content: flex-end;">
+                            <% if (contatos.length > 0) { %>
+                                <a href="/contato/export/json" class="btn btn-secondary" style="font-size:0.8rem; padding:0.4rem 0.8rem;">Exportar JSON</a>
+                                <a href="/contato/export/txt" class="btn btn-secondary" style="font-size:0.8rem; padding:0.4rem 0.8rem;">Exportar TXT</a>
+                            <% } %>
+                            <label class="btn btn-secondary" style="font-size:0.8rem; padding:0.4rem 0.8rem; cursor:pointer;">
+                                Importar
+                                <input type="file" id="import-file" accept=".json,.txt" style="display:none;">
+                            </label>
+                        </div>
+
+                        <% if (contatos.length > 0) { %>
+                            <div class="responsive-table">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Apelido</th>
+                                            <th>Telefone</th>
+                                            <th>Email</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% contatos.forEach(contato => { %>
+                                            <tr>
+                                                <td><%= contato.nome %></td>
+                                                <td><%= contato.nickname %></td>
+                                                <td><%= contato.phone %></td>
+                                                <td><%= contato.email %></td>
+                                                <td>
+                                                    <a href="/contato/index/<%= contato._id %>">Editar</a>
+                                                    <a href="/contato/delete/<%= contato._id %>" class="text-danger">Excluir</a>
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <% } else { %>
+                            <div class="empty-state">
+                                <h2>Nenhum contato cadastrado</h2>
+                                <p>Comece adicionando ou importando contatos.</p>
+                                <div class="d-flex gap-2" style="justify-content: center;">
+                                    <a href="/contato/index" class="btn btn-primary mt-3">Novo Contato</a>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% } else { %>
+                        <div class="empty-state">
+                            <h2>Bem-vindo ao ContJS</h2>
+                            <p>Faça login para acessar seus contatos.</p>
+                            <a href="/login/index" class="btn btn-primary mt-3">Entrar</a>
+                        </div>
+                    <% } %>
+                </div>
             </div>
-            <div class="col-md-2"></div>
         </div>
     </div>
 <%- include('includes/footer') -%>

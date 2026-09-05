@@ -46,6 +46,10 @@ router.get('/contato/index/:id', checkLogin, contatoController.editIndex);
 router.post('/contato/update/:id', checkLogin, contatoController.update);
 router.get('/contato/delete/:id', checkLogin, contatoController.delete);
 
+router.get('/contato/export/json', checkLogin, contatoController.exportJson);
+router.get('/contato/export/txt', checkLogin, contatoController.exportTxt);
+router.post('/contato/import', checkLogin, contatoController.importContacts);
+
 
 
 module.exports = router;

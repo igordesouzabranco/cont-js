@@ -1,4 +1,3 @@
-import validator from 'validator';
 import FormMessage from './FormMessage';
 
 export default class LoginLoginForm {
@@ -28,25 +27,24 @@ export default class LoginLoginForm {
     validate() {
         const errors = [];
 
-        const emailInput = this.form.querySelector('input[name="email"]');
+        const loginInput = this.form.querySelector('input[name="login"]');
         const passwordInput = this.form.querySelector('input[name="password"]');
 
-        const email = (emailInput?.value || '').trim();
+        const login = (loginInput?.value || '').trim();
         const password = passwordInput?.value || '';
 
         let firstInvalidInput = null;
 
-        if (!validator.isEmail(email)) {
-            errors.push('Email inválido.');
-            firstInvalidInput = firstInvalidInput || emailInput;
+        if (!login) {
+            errors.push('Email ou telefone sao obrigatorios.');
+            firstInvalidInput = firstInvalidInput || loginInput;
         }
 
         if (password.length < 6 || password.length > 20) {
-            errors.push('Senha deve ter pelo menos 6 caracteres e não pode ultrapassar 20 caracteres.');
+            errors.push('Senha deve ter entre 6 e 20 caracteres.');
             firstInvalidInput = firstInvalidInput || passwordInput;
         }
 
         return { errors, firstInvalidInput };
     }
 }
-

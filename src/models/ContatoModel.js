@@ -6,6 +6,7 @@ const ContatoSchema = new mongoose.Schema({
     nickname: { type: String, required: false, default: '' },
     email: { type: String, required: false, default: '' },
     phone: { type: String, required: false, default: '' },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'Login', required: true },
     createdAt: { type: Date, default: Date.now }
 });
 
@@ -17,10 +18,11 @@ function Contato(body) {
     this.contato = null;
 }
 
-Contato.prototype.register = async function() {
+Contato.prototype.register = async function(userId) {
     this.validate();
     if (this.errors.length > 0) return;
 
+    this.body.userId = userId;
     this.contato = await ContatoModel.create(this.body);
 }
 
@@ -54,18 +56,22 @@ Contato.prototype.cleanUp = function() {
 }
 
     
-Contato.prototype.update = async function(id) {
+Contato.prototype.update = async function(id, userId) {
     if(typeof id !== 'string') return;
     this.validate();
     if (this.errors.length > 0) return;
     
-    this.contato = await ContatoModel.findByIdAndUpdate(id, this.body, { returnDocument: 'after' });
+    this.contato = await ContatoModel.findOneAndUpdate(
+        { _id: id, userId },
+        this.body,
+        { returnDocument: 'after' }
+    );
 }
 
-Contato.findById = async function(id) {
+Contato.findById = async function(id, userId) {
     if (typeof id !== 'string') return null;
     try {
-        const contato = await ContatoModel.findById(id);
+        const contato = await ContatoModel.findOne({ _id: id, userId });
         return contato;
     } catch (err) {
         console.error(err);
@@ -73,9 +79,9 @@ Contato.findById = async function(id) {
     }
 }
 
-Contato.findContacts = async function() {
+Contato.findContacts = async function(userId) {
     try {
-        const contatos = await ContatoModel.find().sort({ createdAt: -1 });
+        const contatos = await ContatoModel.find({ userId }).sort({ createdAt: -1 });
         return contatos;
     } catch (err) {
         console.error(err);
@@ -83,15 +89,41 @@ Contato.findContacts = async function() {
     }
 }
 
-Contato.delete = async function(id) {
+Contato.delete = async function(id, userId) {
     if (typeof id !== 'string') return null;
     try {
-        const contato = await ContatoModel.findByIdAndDelete(id);
+        const contato = await ContatoModel.findOneAndDelete({ _id: id, userId });
         return contato;
     } catch (err) {
         console.error(err);
         return null;
     }
+}
+
+Contato.importContacts = async function(contacts, userId) {
+    const imported = [];
+    for (const c of contacts) {
+        const nome = (c.nome || c.name || '').trim();
+        if (!nome) continue;
+
+        const body = {
+            nome,
+            nickname: (c.nickname || c.apelido || '').trim(),
+            email: (c.email || '').trim(),
+            phone: (c.phone || c.telefone || '').trim(),
+            userId
+        };
+
+        if (!body.email && !body.phone) continue;
+
+        try {
+            const created = await ContatoModel.create(body);
+            imported.push(created);
+        } catch (err) {
+            console.error('Erro ao importar contato:', err);
+        }
+    }
+    return imported;
 }
 
 

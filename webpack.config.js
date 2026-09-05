@@ -1,12 +1,18 @@
-const path = require('path'); // (CommonJS) Importando o módulo 'path' do Node.js para lidar com caminhos de arquivos e diretórios.
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'development',
     entry: './frontend/main.js',
     output: {
-        path: path.resolve(__dirname, 'public', 'assets', 'js'),
-        filename: 'bundle.js'
+        path: path.resolve(__dirname, 'public', 'assets'),
+        filename: 'js/bundle.js'
     },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'css/bundle.css'
+        })
+    ],
     module: {
         rules: [{
             exclude: /node_modules/,
@@ -17,6 +23,10 @@ module.exports = {
                     presets: ['@babel/env']
                 }
             }
+        },
+        {
+            test: /\.css$/,
+            use: [MiniCssExtractPlugin.loader, 'css-loader']
         }]
     },
     devtool: 'source-map'

@@ -1,14 +1,15 @@
 <%- include('includes/head') -%>
 <%- include('includes/navbar') -%>
     <div class="container">
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8 my-5">
-                <h1 class="display-1 text-center">Erro 500</h1>
-                <p class="text-center lead">Ocorreu um erro interno. Tente novamente em instantes.</p>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="my-5 text-center">
+                    <div class="error-code">500</div>
+                    <h2 class="mt-4">Erro interno</h2>
+                    <p class="lead">Algo deu errado. Tente novamente em instantes.</p>
+                    <a href="/" class="btn btn-primary mt-3">Voltar ao Início</a>
+                </div>
             </div>
-            <div class="col-md-2"></div>
         </div>
     </div>
 <%- include('includes/footer') -%>
-

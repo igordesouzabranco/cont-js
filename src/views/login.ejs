@@ -1,52 +1,64 @@
 <%- include('includes/head') -%>
-    <%- include('includes/navbar') -%>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8 my-5">
-                    <h1 class="text-center">Login AgendaJS
-                    </h1>
-                    <p class="text-center lead">Crie ou entre em sua conta.</p>
+<%- include('includes/navbar') -%>
+    <div class="container">
+        <div class="row" style="justify-content: center;">
+            <div class="col-lg-10">
+                <div class="my-5">
+                    <h1 class="text-center mb-2">Bem-vindo</h1>
+                    <p class="text-center lead mb-4">Acesse sua agenda de contatos.</p>
 
                     <%- include('includes/messages') -%>
 
                     <div class="row">
-                        <div class="col-lg">
-                            <h4>Faça seu cadastro</h4>
-                            <p>Crie uma conta para acessar nosso serviço.</p>
-                            <form action="/login/register" method="POST" class="js-register-form" novalidate>
-                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Digite seu email</label>
-                                    <input type="email" class="form-control" name="email" autocomplete="email" required>
+                        <div class="col-md-6" id="register-section">
+                            <div class="card-futuristic">
+                                <h4>Criar Conta</h4>
+                                <p>Registre-se para começar a usar.</p>
+                                <form action="/login/register" method="POST" class="js-register-form" novalidate>
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <div class="form-group">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email" autocomplete="email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Telefone</label>
+                                        <input type="tel" class="form-control" name="phone" autocomplete="tel" placeholder="Ex: 11999998888">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Senha</label>
+                                        <input type="password" class="form-control" name="password" autocomplete="new-password" minlength="6" maxlength="20" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" style="width:100%">Cadastrar</button>
+                                </form>
+                                <div class="text-center mt-3">
+                                    <button type="button" id="btn-show-login" class="btn-toggle-login">Já tenho conta</button>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Digite sua senha</label>
-                                    <input type="password" class="form-control" name="password" autocomplete="new-password" minlength="6" maxlength="20" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Cadastrar</button>
-                            </form>
+                            </div>
                         </div>
-                        <div class="col-lg">
-                            <h4>Formulário de Login</h4>
-                            <p>Entre em sua conta para acessar nosso serviço.</p>
-                            <form action="/login/login" method="POST" class="js-login-form" novalidate>
-                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Digite seu email</label>
-                                    <input type="email" class="form-control" name="email" autocomplete="email" required>
+                        <div class="col-md-6" id="login-section" style="display:none;">
+                            <div class="card-futuristic">
+                                <h4>Entrar</h4>
+                                <p>Acesse sua conta existente.</p>
+                                <form action="/login/login" method="POST" class="js-login-form" novalidate>
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <div class="form-group">
+                                        <label class="form-label">Email ou Telefone</label>
+                                        <input type="text" class="form-control" name="login" autocomplete="username" placeholder="Digite seu email ou telefone" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Senha</label>
+                                        <input type="password" class="form-control" name="password" autocomplete="current-password" minlength="6" maxlength="20" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" style="width:100%">Entrar</button>
+                                </form>
+                                <div class="text-center mt-3">
+                                    <button type="button" id="btn-show-register" class="btn-toggle-login">Voltar ao cadastro</button>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Digite sua senha</label>
-                                    <input type="password" class="form-control" name="password" autocomplete="current-password" minlength="6" maxlength="20" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Entrar</button>
-                            </form>
+                            </div>
                         </div>
                     </div>
-
                 </div>
-                <div class="col-md-2"></div>
             </div>
         </div>
-        <%- include('includes/footer') -%>
+    </div>
+<%- include('includes/footer') -%>

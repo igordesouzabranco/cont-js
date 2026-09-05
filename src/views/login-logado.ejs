@@ -1,18 +1,32 @@
 <%- include('includes/head') -%>
-    <%- include('includes/navbar') -%>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8 my-5">
-                    <h1 class="text-center">Olá <%= user ? user.email : 'Usuário' %></h1>
-                    <p class="text-center lead">Bem-vindo à AgendaJS</p>
+<%- include('includes/navbar') -%>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="my-5">
+                    <h1 class="text-center mb-2">Olá, <%= user ? user.email : 'Usuário' %></h1>
+                    <p class="text-center lead mb-4">Bem-vindo ao ContJS.</p>
 
                     <%- include('includes/messages') -%>
 
+                    <div class="row" style="gap: 1rem; justify-content: center;">
+                        <div class="col-md-5">
+                            <div class="card-futuristic text-center">
+                                <h4>Contatos</h4>
+                                <p>Visualize e gerencie seus contatos.</p>
+                                <a href="/" class="btn btn-primary mt-3">Ver Contatos</a>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="card-futuristic text-center">
+                                <h4>Novo Contato</h4>
+                                <p>Adicione um novo contato a sua agenda.</p>
+                                <a href="/contato/index" class="btn btn-primary mt-3">Cadastrar</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                    
-                <div class="col-md-2"></div>
             </div>
         </div>
-        <%- include('includes/footer') -%>
+    </div>
+<%- include('includes/footer') -%>
