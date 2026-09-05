@@ -128,5 +128,5 @@ Observações:
 
 ## Autor
 
-- Seu Nome Aqui
+- Igor de Souza Branco
 
